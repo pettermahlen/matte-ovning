@@ -6,9 +6,10 @@ import kotlin.random.Random
 
 private val secondsPerQuestion = 5
 
-/**
- * TODO: document
- */
+val errorMessages = arrayOf(
+    "fel, försök igen",
+    "inte riktigt rätt",
+)
 
 fun main() {
     val readFrom = BufferedReader(InputStreamReader(System.`in`))
@@ -24,7 +25,7 @@ fun main() {
         val timeBefore = Instant.now()
 
         var correct = false
-2
+
         while (!correct) {
             print("Fråga: $i - vad är $left - $right? ")
             try {
@@ -33,10 +34,9 @@ fun main() {
                 if (svar == left - right) {
                     correct = true
                 } else {
-                    print("fel, försök igen\n")
+                    print("${randomMessage(errorMessages)}\n")
                 }
-            }
-            catch (e: NumberFormatException) {
+            } catch (e: NumberFormatException) {
                 print("Inte ett tal, försök igen\n")
             }
         }
@@ -56,3 +56,6 @@ fun main() {
         print("Du behöver öva mera! Det tog $timePerQuestion sekunder per fråga, det får ta $secondsPerQuestion sekunder")
     }
 }
+
+fun randomMessage(strings: Array<String>): String =
+    strings[Random.nextInt(strings.size)]
